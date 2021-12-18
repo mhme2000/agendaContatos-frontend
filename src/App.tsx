@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import Button from '@mui/material/Button';
+import { Table, Button, TableHead, TableBody } from '@mui/material';
+import Listagem from './components/Listagem';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
          Agenda de Contatos
         </p>
         <Button variant="contained"> Vamos começar?</Button>
+        <Listagem />
       </header>
      
     </div>
