@@ -12,7 +12,6 @@ export default function Listagem() {
         console.error("ops! ocorreu um erro" + err);
       });
   }, []);
-  console.log(contatos)
   return (
     <div className="App">
       {contatos?.map((contato) => 

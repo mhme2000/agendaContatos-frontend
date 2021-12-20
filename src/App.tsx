@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { Table, Button, TableHead, TableBody } from '@mui/material';
 import Listagem from './components/Listagem';
 import Button from '@mui/material/Button';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
