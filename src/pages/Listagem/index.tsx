@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 
-export default function Listagem() {
+const Listagem = () =>  {
   const [contatos, setContatos] = useState<Contato[]>([]);
 
   useEffect(() => {
@@ -28,3 +28,5 @@ export interface Contato {
     nomeContato : string,
     numeroContato: string
 }
+
+export default Listagem;
