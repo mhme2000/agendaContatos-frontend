@@ -1,72 +1,72 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Grid, Icon } from '@mui/material';
+import api from '../api/api';
 
 const columns: GridColDef[] = [
-   { field: 'id', headerName: 'ID', width: 40 },
-   { field: 'firstName', headerName: 'First name', width: 150 },
-   { field: 'lastName', headerName: 'Last name', width: 150 },
-   {
-     field: 'age',
-     headerName: 'Age',
-     type: 'number',
-     width: 90,
-   },
- 
-   {
-     field: 'fullName',
-     headerName: 'Full name',
-     description: 'This column has a value getter and is not sortable.',
-     sortable: false,
-     width: 160,
-     // valueGetter: (params: GridValueGetterParams) =>
-     //   `${params.getValue(params.id, 'firstName') || ''} ${
-     //     params.getValue(params.id, 'lastName') || ''
-     //   }`,
-   },
- ];
+  { field: 'id', headerName: 'ID', width: 40 },
+  { field: 'nomeContato', headerName: 'First name', width: 180 },
+  { field: 'numeroContato', headerName: 'Last name', width: 180 },
+  { field: 'options', headerName: 'Options', width: 180, sortable: false, disableColumnMenu:true },
+];
 
-const rows = [
-   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
- ];
+// const rows = [
+//   { id: 1, lastName: 'Snow', firstName: 'Jon' },
+//   { id: 2, lastName: 'Lannister', firstName: 'Cersei' },
+//   { id: 3, lastName: 'Lannister', firstName: 'Jaime' },
+//   { id: 4, lastName: 'Stark', firstName: 'Arya' },
+//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys' },
+//   { id: 6, lastName: 'Melisandre', firstName: null },
+//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara' },
+//   { id: 8, lastName: 'Frances', firstName: 'Rossini' },
+//   { id: 9, lastName: 'Roxie', firstName: 'Harvey' },
+// ];
 
 const Home = () => {
-   return (
-     <div className="App">
-       <header className="App-header">
-         <p>
+  const [contatos, setContatos] = useState([]);
+
+  const getData = async () => {
+    const {data} = await api.get("/AgendaContato");
+    setContatos(data);
+  }
+  useEffect(() => {
+    getData();
+  }, []);
+  return ( 
+    <div className="App">
+      <header className="App-header">
+        <p>
           Agenda de Contatos
-         </p>
-         <Grid item xs={4}>
-         <Button >Adicionar Contato<Icon>add_circle </Icon></Button>
-         </Grid>
-         <br></br>
-         <Grid item xs={4}>
-         <Button>Remover Contato<DeleteIcon/></Button>
-       </Grid>
-         <br></br>
-         <div style={{ height: 400, width: '100%' }}>
-       <DataGrid style={{height: 365, width:'95%'}}
-         rows={rows}
-         columns={columns}
-         pageSize={5}
-         rowsPerPageOptions={[5]}
-         checkboxSelection
-       />
-     </div>
-       </header>
-     </div>
-   );
- }
+        </p>
+        <Grid item xl={4}>
+          <Button >Adicionar Contato<Icon>add_circle </Icon></Button>
+        </Grid>
+        <br></br>
+        <Grid item xs={4} >
+          <Button>Remover Contato<DeleteIcon /></Button>
+        </Grid>
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid style={{ height: 375, width: '50%', justifyContent:'center' }}
+            rows={contatos}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[10]}
+            checkboxSelection
+          />
+        </div>
+      </header>
+    </div>
+  );
+}
+
+export interface Contato {
+  id : number,
+  nomeContato : string,
+  numeroContato: string
+} 
 
 export default Home;
+
+
